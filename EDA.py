@@ -90,3 +90,4 @@ px.scatter(medical_df,
 
 sns.heatmap(medical_df.corr(), cmap='Reds', annot=True)
 plt.title('Correlation Matrix');
+
