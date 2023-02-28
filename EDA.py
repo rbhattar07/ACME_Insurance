@@ -32,9 +32,35 @@ px.histogram(
     medical_df,
     x='bmi',
     marginal='box',
-    nbins=47,
     color_discrete_sequence=['red'],
     title='Distribution of BMI (Body Mass Index)'
     ).update_layout(bargap=0.1).show()
 
+px.histogram(
+    medical_df,
+    x='charges',
+    marginal='box',
+    color='smoker',
+    color_discrete_sequence=['green', 'grey'],
+    title='Distribution of Smoker in terms of charges'
+    ).update_layout(bargap=0.1).show()
 
+px.histogram(
+    medical_df,
+    x='charges',
+    marginal='box',
+    color='sex',
+    color_discrete_sequence=['lightpink', 'lightblue'],
+    title='Distribution of Smoker in terms of charges'
+    ).update_layout(bargap=0.1).show()
+
+px.histogram(
+    medical_df,
+    x='charges',
+    marginal='box',
+    color='region',
+    color_discrete_sequence=['pink', 'blue', 'red', 'orange'],
+    title='Distribution of Smoker in terms of charges'
+    ).update_layout(bargap=0.1).show()
+
+px.histogram(medical_df, x='smoker', color='sex', title='Smoker').show()
