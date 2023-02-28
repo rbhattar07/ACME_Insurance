@@ -1,4 +1,15 @@
 We can make the following observations from the histogram showing smokers and their relation to charges:
-
 For most customers, the annual medical charges are under $10,000. Only a small fraction of customer have higher medical expenses, possibly due to accidents, major illnesses and genetic diseases. The distribution follows a "power law"
 There is a significant difference in medical expenses between smokers and non-smokers. While the median for non-smokers is $7300, the median for smokers is close to $35,000.
+
+We can make the following assumptions from the scatterplot showing age and charges:
+The general trend seems to be that medical charges increase with age, as we might expect. However, there is significant variation at every age, and it's clear that age alone cannot be used to accurately determine medical charges.
+
+We can see three "clusters" of points, each of which seems to form a line with an increasing slope:
+
+The first and the largest cluster consists primary of presumably "healthy non-smokers" who have relatively low medical charges compared to others
+
+The second cluster contains a mix of smokers and non-smokers. It's possible that these are actually two distinct but overlapping clusters: "non-smokers with medical issues" and "smokers without major medical issues".
+
+The final cluster consists exclusively of smokers, presumably smokers with major medical issues that are possibly related to or worsened by smoking.
+

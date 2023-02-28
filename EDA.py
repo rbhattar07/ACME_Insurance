@@ -60,7 +60,33 @@ px.histogram(
     marginal='box',
     color='region',
     color_discrete_sequence=['pink', 'blue', 'red', 'orange'],
-    title='Distribution of Smoker in terms of charges'
+    title='Distribution of Region in terms of charges'
     ).update_layout(bargap=0.1).show()
 
+print(medical_df.smoker.value_counts())
+
 px.histogram(medical_df, x='smoker', color='sex', title='Smoker').show()
+
+# Scatterplot to understand the relationship
+
+px.scatter(medical_df,
+           x='age',
+           y='charges',
+           color='smoker',
+           opacity=0.8,
+           hover_data=['sex'],
+           title='Age vs. Charges').update_traces(marker_size=5).show()
+
+px.scatter(medical_df,
+           x='bmi',
+           y='charges',
+           color='smoker',
+           opacity=0.8,
+           hover_data=['sex'],
+           title='bmi vs. Charges').update_traces(marker_size=5).show()
+
+#px.violin
+#sns.barplot
+
+sns.heatmap(medical_df.corr(), cmap='Reds', annot=True)
+plt.title('Correlation Matrix');
