@@ -11,33 +11,49 @@ import matplotlib
 import seaborn as sns
 import plotly.express as px
 
-df = pd.read_csv('medical.csv')
+medical_df = pd.read_csv('medical.csv')
 
-smoker_values = {'no':0, 'yes':1}
-df['smoker_numeric'] = df.smoker.map(smoker_values)
-gender_values = {'female':0, 'male':1}
-df['sex_numeric'] = df.sex.map(gender_values)
-region_values = {'southeast':1, 'southwest':2, 'northwest':3, 'northeast':4}
-df['region_numeric'] = df.region.map(region_values)
-
-# Creating the basic understanding of our Model in terms of model layout
+#Creating the basic understanding of our Model in terms of model layout
 # Linear Regression Model using scikit learn
 
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import SGDRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn import preprocessing
 
-inputs = df[['age', 'sex_numeric', 'smoker_numeric', 'bmi', 'children', 'region_numeric']]
-targets = df['charges']
+# Categorical columns to numeric cols
+sex_codes = {
+    'female':0,
+    'male':1
+}
+sex_val = medical_df.sex.map(sex_codes)
+medical_df['sex_code'] = sex_val
 
-lrmodel = LinearRegression()
-lrmodel.fit(inputs, targets)
-lr_predictions = lrmodel.predict(inputs)
-print('LR Precictions',lr_predictions)
-print('Linear Regression Model Score:',lrmodel.score(inputs,targets))
+smoker_codes = {
+    'yes': 1,
+    'no':0
+}
+smoker_val = medical_df.smoker.map(smoker_codes)
+medical_df['smoker_code']=smoker_val
 
-sgdmodel = SGDRegressor()
-sgdmodel.fit(inputs, targets)
-sgd_predictions = sgdmodel.predict(inputs)
-print('SGD Predictions:',sgd_predictions)
-print('SGD Model Score', sgdmodel.score(inputs,targets))
+enc = preprocessing.OneHotEncoder()
+enc.fit(medical_df[['region']])
+enc.categories_
+one_hot = enc.transform(medical_df[['region']]).toarray()
+medical_df[['northeast', 'northwest', 'southeast', 'southwest']] = one_hot
 
+# Create inputs and targets
+input_cols = ['age', 'bmi', 'children', 'smoker_code', 'sex_code', 'northeast', 'northwest', 'southeast', 'southwest']
+inputs, targets = medical_df[input_cols], medical_df['charges']
+
+# Create and train the model
+model = LinearRegression().fit(inputs, targets)
+
+# Generate predictions
+predictions = model.predict(inputs)
+
+# Compute loss to evalute the model
+def rmse(targets, predictions):
+    return np.sqrt(np.mean(np.square(targets - predictions)))
+loss = rmse(targets, predictions)
+print('Loss:', loss)
