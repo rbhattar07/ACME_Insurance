@@ -64,3 +64,9 @@ def rmse(targets, predictions):
     return np.sqrt(np.mean(np.square(targets - predictions)))
 loss = rmse(targets, predictions)
 print('Loss:', loss)
+
+model2 = SGDRegressor().fit(inputs,targets)
+predictions2 = model.predict(inputs)
+
+loss2 = rmse(targets, predictions2)
+print('Loss:', loss2)
