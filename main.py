@@ -42,9 +42,16 @@ enc.categories_
 one_hot = enc.transform(medical_df[['region']]).toarray()
 medical_df[['northeast', 'northwest', 'southeast', 'southwest']] = one_hot
 
-# Create inputs and targets
-input_cols = ['age', 'bmi', 'children', 'smoker_code', 'sex_code', 'northeast', 'northwest', 'southeast', 'southwest']
-inputs, targets = medical_df[input_cols], medical_df['charges']
+# Feature Scaling
+numeric_cols = ['age', 'bmi', 'children']
+scaler = StandardScaler()
+scaler.fit(medical_df[numeric_cols])
+scaled_inputs = scaler.transform(medical_df[numeric_cols])
+cat_cols = ['smoker_code', 'sex_code', 'northeast', 'northwest', 'southeast', 'southwest']
+categorical_data = medical_df[cat_cols].values
+
+inputs = np.concatenate((scaled_inputs, categorical_data), axis=1)
+targets = medical_df.charges
 
 # Create and train the model
 model = LinearRegression().fit(inputs, targets)
